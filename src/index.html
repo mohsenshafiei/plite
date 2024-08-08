@@ -1,0 +1,109 @@
+<!-- lighthouse-report.html -->
+<style>
+  #lighthouse-pill {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    opacity: 0.9;
+    padding: 8px 32px;
+    background-color: #000;
+    border: 1px solid #c472fb;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out;
+  }
+
+  #lighthouse-pill.hidden {
+    display: none;
+  }
+
+  #lighthouse-pill p {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    color: white;
+  }
+
+  #lighthouse-report {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #000;
+    border: 1px solid #c472fb;
+    border-radius: 50px;
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    min-width: 50px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease-in-out;
+  }
+
+  #lighthouse-report.expanded {
+    opacity: 1;
+    pointer-events: all;
+    border-radius: 8px;
+    padding: 8px 16px;
+    min-width: 400px;
+  }
+
+  #lighthouse-report p {
+    margin: 0 10px;
+    font-size: 14px;
+    color: #fff;
+    white-space: nowrap;
+  }
+</style>
+
+<div id="lighthouse-pill">
+  <p>Plite</p>
+</div>
+
+<div id="lighthouse-report">
+  <p id="fcp">FCP: 0 s</p>
+  <p id="lcp">LCP: 0 s</p>
+  <p id="cls">CLS: 0</p>
+  <p id="tbt">TBT: 0 s</p>
+  <p id="tti">TTI: 0 s</p>
+  <p id="si">SI: 0 s</p>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const lighthousePill = document.getElementById("lighthouse-pill");
+  const lighthouseReport = document.getElementById("lighthouse-report");
+
+  lighthousePill.addEventListener("click", () => {
+    lighthouseReport.classList.toggle("expanded");
+    lighthousePill.classList.toggle("hidden");
+  });
+
+  lighthouseReport.addEventListener("click", () => {
+    lighthouseReport.classList.toggle("expanded");
+    lighthousePill.classList.toggle("hidden");
+  });
+
+  const socket = io();
+
+  socket.on("connect", () => {
+    console.log("Connected to WebSocket server");
+  });
+
+  socket.on("lighthouseReport", (data) => {
+    console.log("Received Lighthouse report:", data);
+
+    document.getElementById("fcp").textContent = `FCP: ${data.FCP} s`;
+    document.getElementById("lcp").textContent = `LCP: ${data.LCP} s`;
+    document.getElementById("cls").textContent = `CLS: ${data.CLS}`;
+    document.getElementById("tbt").textContent = `TBT: ${data.TBT} s`;
+    document.getElementById("tti").textContent = `TTI: ${data.TTI} s`;
+    document.getElementById("si").textContent = `SI: ${data.SI} s`;
+  });
+</script>

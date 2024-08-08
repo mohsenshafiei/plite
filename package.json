@@ -1,0 +1,32 @@
+{
+  "name": "plite",
+  "version": "0.0.0",
+  "description": "A lite performance monitoring tool, inspired by Vite.",
+  "main": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "test": "vitest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohsenshafiei/plite.git"
+  },
+  "keywords": [
+    "performance-monitoring",
+    "plite"
+  ],
+  "author": "mohsenshafiei",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mohsenshafiei/plite/issues"
+  },
+  "homepage": "https://github.com/mohsenshafiei/plite#readme",
+  "dependencies": {
+    "chokidar": "^3.6.0",
+    "lighthouse": "^12.1.0",
+    "puppeteer": "^23.0.1",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
+    "vite": "^5.4.0"
+  }
+}
